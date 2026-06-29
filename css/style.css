@@ -1,0 +1,520 @@
+/* ============================================================
+   STYLE.CSS — UNC CLUB Y2K / SCENE CORE THEME
+   ============================================================
+   This is the ONE stylesheet used by every page.
+   It's split into clearly labeled sections so you can find
+   what you want to change fast. Look for "EDIT ME" comments —
+   those are the easiest/safest things to tweak.
+
+   TIP: Colors are stored as CSS variables at the very top.
+   Change a color there ONCE and it updates everywhere it's used.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. COLOR PALETTE  (EDIT ME — change hex codes to retheme everything)
+   ------------------------------------------------------------ */
+:root {
+  --hot-pink: #ff2fb3;
+  --neon-purple: #b300ff;
+  --neon-blue: #00e5ff;
+  --neon-green: #39ff14;
+  --neon-yellow: #fff200;
+  --cyber-orange: #ff8c00;
+  --bg-dark: #0a0014;
+  --bg-purple: #1a0033;
+  --chrome-light: #f4f4f4;
+  --chrome-dark: #8a8a8a;
+  --text-glow: #ffffff;
+  --guestbook-bg: #2d0050;
+}
+
+/* ------------------------------------------------------------
+   2. FONT IMPORTS
+   ------------------------------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Comic+Neue:wght@400;700&family=Tahoma&display=swap');
+
+/* ------------------------------------------------------------
+   3. GLOBAL RESET + BODY BACKGROUND
+   ------------------------------------------------------------ */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  /* EDIT ME: swap this tiled background image any time by
+     dropping a new file named "tile-bg.gif" or "tile-bg.png"
+     into the /images folder and updating the line below */
+  background-color: var(--bg-dark);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(179,0,255,0.35) 0%, transparent 45%),
+    radial-gradient(circle at 80% 0%, rgba(0,229,255,0.25) 0%, transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(255,47,179,0.3) 0%, transparent 50%),
+    repeating-linear-gradient(45deg, #150026 0px, #150026 2px, #1a0033 2px, #1a0033 4px);
+  background-attachment: fixed;
+  font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+  color: var(--text-glow);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated twinkling stars layered over every page */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, #fff 1px, transparent 1.5px),
+    radial-gradient(circle, #fff 1px, transparent 1.5px);
+  background-size: 60px 60px, 90px 90px;
+  background-position: 0 0, 30px 40px;
+  opacity: 0.5;
+  animation: twinkle 3s infinite alternate;
+  z-index: 0;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.2; }
+  to   { opacity: 0.7; }
+}
+
+/* ------------------------------------------------------------
+   4. PAGE WRAPPER (the "old website table layout" box)
+   ------------------------------------------------------------ */
+.page-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 14px 12px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Old-school "construction zone" style border box around content */
+.guestbook-box {
+  width: 100%;
+  background: var(--guestbook-bg);
+  border: 4px dashed var(--neon-yellow);
+  border-radius: 14px;
+  padding: 18px 14px;
+  margin: 14px 0;
+  box-shadow:
+    0 0 12px var(--neon-purple),
+    0 0 30px rgba(179,0,255,0.5) inset;
+  position: relative;
+}
+
+/* corner sparkle GIF placeholders pinned to guestbook box corners */
+.guestbook-box .corner-sparkle {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+}
+.corner-sparkle.tl { top: -10px; left: -10px; }
+.corner-sparkle.tr { top: -10px; right: -10px; }
+.corner-sparkle.bl { bottom: -10px; left: -10px; }
+.corner-sparkle.br { bottom: -10px; right: -10px; }
+
+/* ------------------------------------------------------------
+   5. CHROME / NEON TITLE TEXT  (used for big headings)
+   ------------------------------------------------------------ */
+.chrome-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(18px, 6vw, 28px);
+  letter-spacing: 1px;
+  line-height: 1.5;
+  margin: 10px 0;
+  color: #fff;
+  background: linear-gradient(180deg, #ffffff 0%, #d9d9d9 40%, #8a8a8a 50%, #ffffff 60%, #c0c0c0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 6px var(--neon-purple)) drop-shadow(0 0 14px var(--hot-pink));
+  animation: chrome-shine 2.5s linear infinite, wiggle 4s ease-in-out infinite;
+}
+
+@keyframes chrome-shine {
+  0%   { filter: drop-shadow(0 0 6px var(--neon-purple)) drop-shadow(0 0 14px var(--hot-pink)); }
+  50%  { filter: drop-shadow(0 0 10px var(--neon-blue)) drop-shadow(0 0 20px var(--neon-green)); }
+  100% { filter: drop-shadow(0 0 6px var(--neon-purple)) drop-shadow(0 0 14px var(--hot-pink)); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+
+.rainbow-text {
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff2fb3, #ff8c00, #fff200, #39ff14, #00e5ff, #b300ff, #ff2fb3);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow-move 4s linear infinite;
+}
+
+@keyframes rainbow-move {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Blinking marquee-style text (the classic "UNDER CONSTRUCTION" feel) */
+.blink {
+  animation: blink-anim 1s step-start infinite;
+}
+@keyframes blink-anim {
+  50% { opacity: 0; }
+}
+
+/* Marquee scrolling banner */
+.marquee-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: #000;
+  border: 3px solid var(--neon-green);
+  border-radius: 6px;
+  padding: 6px 0;
+  margin: 10px 0;
+  box-shadow: 0 0 10px var(--neon-green);
+}
+.marquee-track {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: marquee-scroll 12s linear infinite;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  color: var(--neon-green);
+  text-shadow: 0 0 6px var(--neon-green);
+}
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ------------------------------------------------------------
+   6. IMAGE PLACEHOLDER GRID  (replace files in /images, no code edits needed)
+   ------------------------------------------------------------ */
+.deco-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+
+.deco-img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px var(--hot-pink));
+  animation: float-bounce 2.4s ease-in-out infinite;
+  image-rendering: pixelated;
+}
+.deco-img:nth-child(2) { animation-delay: 0.3s; }
+.deco-img:nth-child(3) { animation-delay: 0.6s; }
+.deco-img:nth-child(4) { animation-delay: 0.9s; }
+
+@keyframes float-bounce {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-8px) rotate(4deg); }
+}
+
+/* Fallback "broken image" placeholder look — styled cute instead of ugly,
+   shows BEFORE you've dropped your own pictures in /images */
+.placeholder-box {
+  width: 70px;
+  height: 70px;
+  background: repeating-conic-gradient(var(--neon-purple) 0% 25%, var(--hot-pink) 0% 50%) 50% / 14px 14px;
+  border: 3px solid var(--neon-yellow);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 0 10px var(--neon-blue);
+  animation: float-bounce 2.4s ease-in-out infinite;
+}
+
+/* ------------------------------------------------------------
+   7. GLOSSY BUTTONS (Y2K "aqua" button look)
+   ------------------------------------------------------------ */
+.glossy-btn {
+  font-family: 'Comic Neue', cursive, sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: #fff;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: linear-gradient(180deg, #ff7ad9 0%, var(--hot-pink) 45%, #c200a0 55%, #ff7ad9 100%);
+  box-shadow:
+    0 4px 0 #8a0064,
+    0 0 16px var(--hot-pink),
+    inset 0 6px 8px rgba(255,255,255,0.6);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  position: relative;
+  margin: 8px;
+  transition: transform 0.1s ease;
+}
+.glossy-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #8a0064, 0 0 10px var(--hot-pink), inset 0 4px 6px rgba(255,255,255,0.5);
+}
+
+.glossy-btn.blue {
+  background: linear-gradient(180deg, #7adfff 0%, var(--neon-blue) 45%, #0090a8 55%, #7adfff 100%);
+  box-shadow: 0 4px 0 #006c80, 0 0 16px var(--neon-blue), inset 0 6px 8px rgba(255,255,255,0.6);
+}
+.glossy-btn.blue:active {
+  box-shadow: 0 1px 0 #006c80, 0 0 10px var(--neon-blue), inset 0 4px 6px rgba(255,255,255,0.5);
+}
+
+.glossy-btn.green {
+  background: linear-gradient(180deg, #9bff7a 0%, var(--neon-green) 45%, #1a8a00 55%, #9bff7a 100%);
+  box-shadow: 0 4px 0 #176b00, 0 0 16px var(--neon-green), inset 0 6px 8px rgba(255,255,255,0.6);
+  color: #0a2900;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.4);
+}
+.glossy-btn.green:active {
+  box-shadow: 0 1px 0 #176b00, 0 0 10px var(--neon-green), inset 0 4px 6px rgba(255,255,255,0.5);
+}
+
+/* "Floating impossible to click" button used on page 4 */
+.btn-runaway {
+  position: fixed;
+  z-index: 50;
+  transition: top 0.18s ease, left 0.18s ease;
+}
+
+/* ------------------------------------------------------------
+   8. TEXT INPUT (old web style — beveled inset box)
+   ------------------------------------------------------------ */
+.y2k-input {
+  font-family: 'Comic Neue', cursive, sans-serif;
+  font-size: 16px;
+  padding: 12px 14px;
+  width: 100%;
+  max-width: 280px;
+  border: 3px solid var(--neon-blue);
+  border-radius: 10px;
+  background: #fff0fb;
+  color: #5a0050;
+  box-shadow: inset 0 0 10px rgba(179,0,255,0.4), 0 0 10px var(--neon-blue);
+  outline: none;
+  margin: 10px 0;
+  text-align: center;
+}
+.y2k-input::placeholder {
+  color: #c060b0;
+  font-style: italic;
+}
+.y2k-input:focus {
+  box-shadow: inset 0 0 10px rgba(179,0,255,0.5), 0 0 18px var(--neon-pink, var(--hot-pink));
+}
+
+/* ------------------------------------------------------------
+   9. NUMBER / AGE SELECTOR (page 3)
+   ------------------------------------------------------------ */
+.age-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 16px 0;
+}
+.age-picker button {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(180deg, #ffe27a, var(--neon-yellow));
+  box-shadow: 0 3px 0 #a88600, 0 0 12px var(--neon-yellow), inset 0 4px 6px rgba(255,255,255,0.7);
+  color: #4a3800;
+}
+.age-picker button:active {
+  transform: translateY(2px);
+}
+.age-display {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 30px;
+  min-width: 70px;
+  color: var(--neon-green);
+  text-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+}
+
+/* ------------------------------------------------------------
+   10. SPARKLE / GLITTER OVERLAY (cursor-following + ambient)
+   ------------------------------------------------------------ */
+.sparkle {
+  position: fixed;
+  pointer-events: none;
+  font-size: 16px;
+  z-index: 999;
+  animation: sparkle-pop 0.8s ease-out forwards;
+}
+@keyframes sparkle-pop {
+  0%   { opacity: 1; transform: scale(0.4) rotate(0deg); }
+  100% { opacity: 0; transform: scale(1.4) rotate(120deg) translateY(-20px); }
+}
+
+.glitter-bar {
+  width: 100%;
+  height: 10px;
+  background: repeating-linear-gradient(90deg,
+    var(--hot-pink) 0 8px, var(--neon-yellow) 8px 16px,
+    var(--neon-blue) 16px 24px, var(--neon-green) 24px 32px);
+  background-size: 200% 100%;
+  animation: glitter-slide 1.5s linear infinite;
+  border-radius: 6px;
+  margin: 10px 0;
+  box-shadow: 0 0 10px rgba(255,255,255,0.6);
+}
+@keyframes glitter-slide {
+  0% { background-position: 0 0; }
+  100% { background-position: 32px 0; }
+}
+
+/* ------------------------------------------------------------
+   11. FLOATING HEARTS / STARS / EMOJI BACKGROUND ANIMATION
+   ------------------------------------------------------------ */
+.float-deco {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  font-size: 22px;
+  opacity: 0.85;
+  animation: float-up linear infinite;
+}
+@keyframes float-up {
+  0%   { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.9; }
+  90%  { opacity: 0.9; }
+  100% { transform: translateY(-10vh) translateX(20px) rotate(360deg); opacity: 0; }
+}
+
+/* ------------------------------------------------------------
+   12. VIDEO CONTAINER (page 2)
+   ------------------------------------------------------------ */
+.video-frame {
+  width: 100%;
+  border: 6px solid var(--neon-purple);
+  border-radius: 14px;
+  box-shadow: 0 0 20px var(--neon-purple), 0 0 40px var(--hot-pink);
+  background: #000;
+  overflow: hidden;
+}
+.video-frame video {
+  width: 100%;
+  display: block;
+}
+
+/* ------------------------------------------------------------
+   13. WEBRING / HIT COUNTER (nostalgic bottom footer)
+   ------------------------------------------------------------ */
+.hit-counter {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  background: #000;
+  color: var(--neon-green);
+  border: 2px solid var(--neon-green);
+  padding: 6px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 18px;
+  letter-spacing: 1px;
+}
+
+.webring-footer {
+  margin-top: 20px;
+  font-size: 11px;
+  color: #d9b3ff;
+  opacity: 0.8;
+}
+
+/* ------------------------------------------------------------
+   14. BIRTHDAY / HANDWRITTEN FINAL PAGE STYLES
+   ------------------------------------------------------------ */
+.handwritten {
+  font-family: 'Comic Neue', cursive, sans-serif;
+  font-size: clamp(18px, 5vw, 24px);
+  line-height: 2;
+  color: #fff0fb;
+  text-shadow: 0 0 8px var(--hot-pink), 0 0 16px var(--neon-purple);
+  direction: rtl;
+  padding: 10px;
+}
+
+.balloon {
+  position: fixed;
+  width: 36px;
+  height: 46px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  pointer-events: none;
+  z-index: 0;
+  animation: balloon-rise linear infinite;
+}
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  width: 1px;
+  height: 16px;
+  background: rgba(255,255,255,0.5);
+}
+@keyframes balloon-rise {
+  0%   { transform: translateY(110vh) translateX(0); }
+  100% { transform: translateY(-20vh) translateX(30px); }
+}
+
+/* ------------------------------------------------------------
+   15. UTILITY / LAYOUT HELPERS
+   ------------------------------------------------------------ */
+.center-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.mt-1 { margin-top: 10px; }
+.mt-2 { margin-top: 20px; }
+.hidden { display: none !important; }
+.small-note {
+  font-size: 12px;
+  color: #d9b3ff;
+  margin-top: 6px;
+}
+
+/* ------------------------------------------------------------
+   16. RESPONSIVE TWEAKS (mobile-first already, this is for bigger screens)
+   ------------------------------------------------------------ */
+@media (min-width: 600px) {
+  .page-wrap { max-width: 560px; padding-top: 30px; }
+  .chrome-title { font-size: 30px; }
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

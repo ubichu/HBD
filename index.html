@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     PAGE 1 — index.html
+     ============================================================
+     This is the FIRST page visitors see.
+     EDIT ME spots are marked with comments below:
+       - the big warning text
+       - the input placeholder text
+       - the decorative images (just drop new files in /images
+         with the SAME filenames and they'll swap automatically)
+     ============================================================ -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>♡ UNC CLUB ♡ Are You The One...?</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="page-wrap">
+
+    <!-- Scrolling marquee banner, very 2003 -->
+    <div class="marquee-wrap">
+      <span class="marquee-track">
+        ✦ WELCOME TO THE UNC CLUB ✦ DO NOT ENTER UNLESS U ARE THE CHOSEN ONE ✦ 18+ MEMBERS ONLY (kinda) ✦ BEST VIEWED IN 1024x768 ✦
+      </span>
+    </div>
+
+    <!-- ============================================
+         EDIT ME: Decorative image placeholders.
+         Drop your own files into /images using these
+         exact names to replace them: deco1.png, deco2.png,
+         deco3.png, deco4.png. If a file is missing, a cute
+         checkerboard placeholder box shows instead — totally
+         safe, nothing breaks.
+         ============================================ -->
+    <div class="deco-row">
+      <img class="deco-img" src="images/deco1.png" alt="sparkle decoration" onerror="this.outerHTML='<div class=\'placeholder-box\'>🐱</div>'">
+      <img class="deco-img" src="images/deco2.png" alt="star decoration" onerror="this.outerHTML='<div class=\'placeholder-box\'>⭐</div>'">
+      <img class="deco-img" src="images/deco3.png" alt="heart decoration" onerror="this.outerHTML='<div class=\'placeholder-box\'>💜</div>'">
+      <img class="deco-img" src="images/deco4.png" alt="cat decoration" onerror="this.outerHTML='<div class=\'placeholder-box\'>😼</div>'">
+    </div>
+
+    <div class="guestbook-box">
+      <img class="corner-sparkle tl" src="images/sparkle-corner.png" alt="" onerror="this.style.display='none'">
+      <img class="corner-sparkle tr" src="images/sparkle-corner.png" alt="" onerror="this.style.display='none'">
+      <img class="corner-sparkle bl" src="images/sparkle-corner.png" alt="" onerror="this.style.display='none'">
+      <img class="corner-sparkle br" src="images/sparkle-corner.png" alt="" onerror="this.style.display='none'">
+
+      <!-- ============================================
+           EDIT ME: the main warning text
+           ============================================ -->
+      <p class="chrome-title">
+        Warning... <span class="blink">😼</span><br>
+        Someone's about to join<br>
+        the <span class="rainbow-text">UNC CLUB</span> 😼
+      </p>
+
+      <div class="glitter-bar"></div>
+
+      <p style="font-size:15px; color:#ffd9f5; margin:14px 0 6px;">
+        is it u tho??? 👀
+      </p>
+
+      <!-- ============================================
+           EDIT ME: input placeholder text below
+           ============================================ -->
+      <input
+        type="text"
+        id="nameInput"
+        class="y2k-input"
+        placeholder="if it's u type ur name"
+        maxlength="30"
+        autocomplete="off"
+      >
+      <p class="small-note" id="nameWarning" style="display:none; color:#ff6ad5;">
+        ✦ type ur name first silly ✦
+      </p>
+
+      <button class="glossy-btn mt-1" id="continueBtn">yes its me ➜</button>
+    </div>
+
+    <div class="hit-counter">YOU ARE VISITOR # 000142</div>
+    <div class="webring-footer">🔗 member of the official UNC webring 🔗</div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    /* ----------------------------------------------------------
+       PAGE 1 LOGIC
+       - Reads the typed name
+       - Saves it (so later pages could greet the visitor by name
+         if you want — see getVisitorName() in js/main.js)
+       - Moves to page 2
+       ---------------------------------------------------------- */
+    const nameInput = document.getElementById("nameInput");
+    const continueBtn = document.getElementById("continueBtn");
+    const nameWarning = document.getElementById("nameWarning");
+
+    continueBtn.addEventListener("click", () => {
+      const name = nameInput.value.trim();
+      if (name.length === 0) {
+        nameWarning.style.display = "block";
+        nameInput.focus();
+        return;
+      }
+      saveVisitorName(name); // from js/main.js
+      // EDIT ME: change this filename if you rename page 2
+      window.location.href = "page2-video.html";
+    });
+
+    // Let pressing Enter on mobile keyboards also continue
+    nameInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") continueBtn.click();
+    });
+  </script>
+</body>
+</html>

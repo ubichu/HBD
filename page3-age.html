@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     PAGE 3 — page3-age.html
+     ============================================================
+     EDIT ME:
+       - The redirect function "goToAdultPage()" near the bottom
+         is clearly marked — change the URL there to send 18+
+         visitors wherever you want.
+     ============================================================ -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>♡ UNC CLUB ♡ How Old?</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="page-wrap">
+
+    <div class="marquee-wrap">
+      <span class="marquee-track">
+        ✦ AGE CHECK REQUIRED ✦ BE HONEST ✦ NO CHEATING ✦
+      </span>
+    </div>
+
+    <div class="guestbook-box">
+      <p class="chrome-title">How old r u now? 🎂</p>
+
+      <div class="age-picker">
+        <button id="ageDown" aria-label="decrease age">−</button>
+        <span class="age-display" id="ageValue">18</span>
+        <button id="ageUp" aria-label="increase age">+</button>
+      </div>
+
+      <button class="glossy-btn blue mt-1" id="confirmAgeBtn">confirm ➜</button>
+
+      <!-- Message shown only if under 18 -->
+      <p id="kidMessage" class="hidden" style="font-size:18px; margin-top:14px; color:#fff200; text-shadow:0 0 10px #fff200;">
+        Haha, you're still a kid 😹😹😹
+      </p>
+    </div>
+
+    <div class="hit-counter">VERIFYING... PLEASE WAIT</div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    /* ----------------------------------------------------------
+       PAGE 3 LOGIC
+       ---------------------------------------------------------- */
+    const ageValue = document.getElementById("ageValue");
+    const ageDown = document.getElementById("ageDown");
+    const ageUp = document.getElementById("ageUp");
+    const confirmAgeBtn = document.getElementById("confirmAgeBtn");
+    const kidMessage = document.getElementById("kidMessage");
+
+    let age = 18; // starting number shown on the dial
+
+    function renderAge() {
+      ageValue.textContent = age;
+    }
+
+    ageDown.addEventListener("click", () => {
+      if (age > 1) age--;
+      renderAge();
+    });
+
+    ageUp.addEventListener("click", () => {
+      if (age < 99) age++;
+      renderAge();
+    });
+
+    /* ------------------------------------------------------------
+       EDIT ME: This is the function that runs when someone is
+       18 or older. Change the line inside to send them to
+       whatever page/URL you want.
+       ------------------------------------------------------------ */
+    function goToAdultPage() {
+      // 👇 CHANGE THIS LINE to point wherever you like 👇
+      window.location.href = "page4-favorite.html";
+      // Examples:
+      // window.location.href = "https://your-link-here.com";
+      // window.location.href = "some-other-page.html";
+    }
+
+    confirmAgeBtn.addEventListener("click", () => {
+      if (age >= 18) {
+        goToAdultPage();
+      } else {
+        kidMessage.classList.remove("hidden");
+        confirmAgeBtn.style.display = "none";
+        ageDown.style.display = "none";
+        ageUp.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     PAGE 2 — page2-video.html
+     ============================================================
+     EDIT ME:
+       - Replace /videos/main-video.mp4 with your own video.
+         Just keep the SAME filename "main-video.mp4" and it
+         will swap in automatically — no code editing needed.
+       - If you want a different filename, change the <source>
+         src below AND the filename comment.
+     ============================================================ -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>♡ UNC CLUB ♡ Loading...</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="page-wrap">
+
+    <div class="marquee-wrap">
+      <span class="marquee-track">
+        ✦ PLAY THE VIDEO ✦ TURN UP YOUR SPEAKERS ✦ DO NOT SKIP ✦
+      </span>
+    </div>
+
+    <p class="chrome-title">watch this 🙀💜</p>
+
+    <div class="video-frame">
+      <!-- ============================================
+           EDIT ME: drop your video file into /videos
+           named "main-video.mp4" to replace this.
+           A small fallback message shows if no file exists.
+           ============================================ -->
+      <video id="mainVideo" controls playsinline poster="images/video-poster.jpg">
+        <source src="videos/main-video.mp4" type="video/mp4">
+        Your browser can't play this video — but that's ok, the
+        button below still works!
+      </video>
+    </div>
+
+    <p class="small-note" id="videoFallbackNote" style="display:none;">
+      ✦ no video file found yet — drop "main-video.mp4" into the
+      /videos folder! you can still hit continue below ✦
+    </p>
+
+    <button class="glossy-btn green mt-2" id="continueBtn">continue ➜</button>
+
+    <div class="hit-counter">LOADING MEDIA... 100% ✓</div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    /* ----------------------------------------------------------
+       PAGE 2 LOGIC
+       - Continue button always works, whether or not a real
+         video file has been added yet
+       - Automatically continues a moment after the video
+         finishes playing (if a real video file is present)
+       ---------------------------------------------------------- */
+    const video = document.getElementById("mainVideo");
+    const continueBtn = document.getElementById("continueBtn");
+    const fallbackNote = document.getElementById("videoFallbackNote");
+
+    function goToPage3() {
+      // EDIT ME: change this filename if you rename page 3
+      window.location.href = "page3-age.html";
+    }
+
+    continueBtn.addEventListener("click", goToPage3);
+
+    // When the video finishes playing naturally, auto-continue
+    video.addEventListener("ended", () => {
+      setTimeout(goToPage3, 600);
+    });
+
+    // If no video file exists yet, show a friendly note (no error popup)
+    video.addEventListener("error", () => {
+      fallbackNote.style.display = "block";
+    });
+  </script>
+</body>
+</html>
