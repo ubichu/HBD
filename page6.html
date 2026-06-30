@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ar">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UNC Club - Letter</title>
+    <link rel="icon" href="images/bow.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/script.js"></script>
+  </head>
+  <body data-page="envelope">
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <div class="sky-layer final-sky" aria-hidden="true">
+      <span>♡</span>
+      <span>✧</span>
+      <span>🎈</span>
+      <span>☆</span>
+      <span>♥</span>
+      <span>✦</span>
+    </div>
+
+    <button class="sound-toggle" type="button" data-sound-toggle aria-label="Toggle background music" title="music">♪</button>
+
+    <header class="site-header">
+      <a class="site-logo" href="index.html">♡ UNC Club</a>
+      <nav class="site-nav" aria-label="Cute page map">
+        <a href="index.html">01</a>
+        <a href="page2.html">02</a>
+        <a href="page3.html">03</a>
+        <a href="page4.html">04</a>
+        <a href="page5.html">05</a>
+        <a aria-current="page" href="page6.html">06</a>
+      </nav>
+    </header>
+
+    <main id="main" class="page-shell">
+      <!-- Page 6 controls the animated envelope and final letter reveal. -->
+      <section class="window-frame envelope-panel" aria-labelledby="envelope-title">
+        <div class="window-title">final-letter.mail</div>
+
+        <div class="sticker-row" aria-hidden="true">
+          <!-- Replace this GIF with your own final celebration GIF. -->
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-star.gif" alt="">
+          <!-- Replace this image. -->
+          <img class="decor-img" src="images/bow.svg" alt="">
+          <!-- Replace this GIF with your own. -->
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-heart.gif" alt="">
+        </div>
+
+        <h1 id="envelope-title">click the pink envelope</h1>
+
+        <button class="envelope" id="pink-envelope" type="button" aria-expanded="false" aria-controls="birthday-letter">
+          <span class="envelope-back" aria-hidden="true"></span>
+          <span class="envelope-letter-peek" aria-hidden="true"></span>
+          <span class="envelope-front" aria-hidden="true"></span>
+          <span class="envelope-flap" aria-hidden="true"></span>
+          <span class="envelope-seal" aria-hidden="true">♡</span>
+          <span class="sr-only">Open birthday envelope</span>
+        </button>
+
+        <article class="letter-paper" id="birthday-letter" dir="rtl" lang="ar" tabindex="-1" hidden>
+          <p>كل عام وأنت بخير يا أجمل شيء بالدنيا 🎂💖 أحبك وأعشقك، وأتمنى لك سنة سعيدة وحياة مليئة بالفرح. وكل عام وأنا محظوظ لأنك بحياتي. 🙄💖</p>
+        </article>
+
+        <div class="final-stickers" aria-hidden="true">
+          <!-- Replace these images or GIF placeholders with your own decorations. -->
+          <img class="decor-img" src="images/pixel-cat.svg" alt="">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-sparkle.gif" alt="">
+          <img class="decor-img" src="images/teddy.svg" alt="">
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
