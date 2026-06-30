@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UNC Club - Warning</title>
+    <link rel="icon" href="images/bow.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/script.js"></script>
+  </head>
+  <body data-page="intro">
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <!-- Shared floating decorations: edit the symbols in the HTML or their positions in css/style.css. -->
+    <div class="sky-layer" aria-hidden="true">
+      <span>✦</span>
+      <span>♡</span>
+      <span>☆</span>
+      <span>✧</span>
+      <span>♥</span>
+      <span>✦</span>
+    </div>
+
+    <!-- Shared music toggle. Audio files live in audio/ and are controlled by js/script.js. -->
+    <button class="sound-toggle" type="button" data-sound-toggle aria-label="Toggle background music" title="music">♪</button>
+
+    <header class="site-header">
+      <a class="site-logo" href="index.html">♡ UNC Club</a>
+      <nav class="site-nav" aria-label="Cute page map">
+        <a aria-current="page" href="index.html">01</a>
+        <a href="page2.html">02</a>
+        <a href="page3.html">03</a>
+        <a href="page4.html">04</a>
+        <a href="page5.html">05</a>
+        <a href="page6.html">06</a>
+      </nav>
+    </header>
+
+    <main id="main" class="page-shell">
+      <!-- Page 1 controls the introduction and name save step. -->
+      <section class="window-frame intro-panel" aria-labelledby="intro-title">
+        <div class="window-title">warning.exe</div>
+
+        <div class="sticker-row" aria-hidden="true">
+          <!-- Replace this GIF with your own blinking sticker. -->
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-sparkle.gif" alt="">
+          <!-- Replace this image with your own cute sticker. -->
+          <img class="decor-img" src="images/pixel-cat.svg" alt="">
+          <!-- Replace this GIF with your own floating icon. -->
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-heart.gif" alt="">
+        </div>
+
+        <p class="eyebrow">soft neon webcore portal</p>
+        <h1 id="intro-title">Warning... Someone's about to join the UNC Club 🙀</h1>
+        <p class="small-copy">loading birthday magic... please wait cutely...</p>
+
+        <form class="name-form" id="intro-form" autocomplete="off">
+          <label class="sr-only" for="visitor-name">if it's you type ur name</label>
+          <input id="visitor-name" name="visitorName" type="text" maxlength="24" placeholder="if it's you type ur name">
+          <button class="gloss-button" type="submit">Continue</button>
+        </form>
+
+        <p class="tiny-status" id="intro-status" aria-live="polite">♡ enter the secret club softly ♡</p>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UNC Club - Video</title>
+    <link rel="icon" href="images/bow.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/script.js"></script>
+  </head>
+  <body data-page="video">
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <div class="sky-layer" aria-hidden="true">
+      <span>♡</span>
+      <span>✧</span>
+      <span>☆</span>
+      <span>♥</span>
+      <span>✦</span>
+      <span>♡</span>
+    </div>
+
+    <button class="sound-toggle" type="button" data-sound-toggle aria-label="Toggle background music" title="music">♪</button>
+
+    <header class="site-header">
+      <a class="site-logo" href="index.html">♡ UNC Club</a>
+      <nav class="site-nav" aria-label="Cute page map">
+        <a href="index.html">01</a>
+        <a aria-current="page" href="page2.html">02</a>
+        <a href="page3.html">03</a>
+        <a href="page4.html">04</a>
+        <a href="page5.html">05</a>
+        <a href="page6.html">06</a>
+      </nav>
+    </header>
+
+    <main id="main" class="page-shell">
+      <!-- Page 2 controls the video step. Replace the MP4 in videos/video.mp4. -->
+      <section class="window-frame video-panel" aria-labelledby="video-title">
+        <div class="window-title">memory-player.html</div>
+
+        <div class="sticker-row" aria-hidden="true">
+          <!-- Replace this image. -->
+          <img class="decor-img" src="images/pixel-bunny.svg" alt="">
+          <!-- Replace this GIF with your own animated decoration. -->
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-star.gif" alt="">
+          <!-- Replace this image. -->
+          <img class="decor-img" src="images/teddy.svg" alt="">
+        </div>
+
+        <p class="eyebrow">hi <span data-visitor-name>cutie</span> ♡</p>
+        <h1 id="video-title">a tiny video before the next portal</h1>
+
+        <div class="video-shell">
+          <!-- Replace this GIF/image poster if you want a custom preview. -->
+          <video id="memory-video" controls playsinline preload="metadata" poster="images/video-poster.svg">
+            <!-- Replace this video with your own file. Keep the same name, or update this src. -->
+            <source src="videos/video.mp4" type="video/mp4">
+            Your browser could not play the placeholder video. Replace videos/video.mp4 with your own MP4.
+          </video>
+        </div>
+
+        <button class="gloss-button" id="video-continue" type="button">Continue</button>
+        <p class="tiny-status">the button works even if the video is still a placeholder</p>
+      </section>
+    </main>
+  </body>
+</html>
