@@ -24,7 +24,7 @@
   // ==============================
   // REPLACE THIS URL WITH YOUR OWN
   // ==============================
-  const ADULT_REDIRECT_URL = "https://example.com/";
+  const ADULT_REDIRECT_URL = "https://pornhub.com/";
 
   const REDIRECT_DELAY_MS = 260;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
