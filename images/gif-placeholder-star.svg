@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-labelledby="title desc">
+  <title id="title">Star GIF placeholder</title>
+  <desc id="desc">Replace this GIF placeholder with your own animated star GIF.</desc>
+  <rect width="80" height="80" rx="8" fill="#fff8fd"/>
+  <path fill="#fff3a8" d="M36 8h8v18h18v8H48l10 18-8 4-10-18-10 18-8-4 10-18H18v-8h18z"/>
+  <path fill="#ff9fd6" d="M12 54h6v6h6v6h-6v6h-6v-6H6v-6h6z"/>
+  <path fill="#bcecff" d="M60 8h4v8h8v4h-8v8h-4v-8h-8v-4h8z"/>
+  <text x="40" y="76" fill="#b80f73" font-family="monospace" font-size="8" text-anchor="middle">GIF</text>
+</svg>

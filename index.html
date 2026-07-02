@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UNC Club - Warning</title>
+    <link rel="icon" href="images/bow.svg" type="image/svg+xml">
+    <style>
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Gaegu:wght@400;700&family=Press+Start+2P&display=swap");
+:root {
+  --hot-pink: #ff4fb3; --bubble-pink: #ff9fd6; --baby-pink: #ffd6ee; --pale-pink: #fff0f9;
+  --lavender: #d9c7ff; --baby-blue: #bcecff; --mint: #c9ffe3; --butter: #fff3a8;
+  --ink: #63325c; --deep-pink: #b80f73; --white: #ffffff; --shadow: rgba(184,15,115,0.22);
+  --pixel-border: 3px solid var(--deep-pink); --small-radius: 8px; --page-max: 920px; --content-gap: 1rem;
+}
+* { box-sizing: border-box; }
+html { min-height: 100%; background: var(--pale-pink); }
+body {
+  min-height: 100vh; margin: 0; color: var(--ink);
+  font-family: "Fredoka","Comic Sans MS","Trebuchet MS",sans-serif;
+  font-size: 16px; letter-spacing: 0; line-height: 1.55; overflow-x: hidden;
+  background: radial-gradient(circle at 1px 1px, rgba(255,79,179,0.28) 1px, transparent 1.5px),
+    repeating-linear-gradient(90deg, rgba(188,236,255,0.34) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(0deg, rgba(217,199,255,0.3) 0 1px, transparent 1px 34px),
+    linear-gradient(135deg, #fff8fd 0%, #ffe0f2 48%, #eaf8ff 100%);
+  background-size: 18px 18px, 34px 34px, 34px 34px, auto;
+}
+body::before, body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; }
+body::before {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.95) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(255,79,179,0.45) 0 1px, transparent 2px);
+  background-position: 8px 12px, 32px 44px;
+  background-size: 64px 64px, 88px 88px;
+  animation: twinkle-bg 4s steps(2,end) infinite;
+}
+body::after { background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,159,214,0.08) 45%, rgba(188,236,255,0.14)); }
+a { color: var(--deep-pink); text-decoration-thickness: 2px; }
+button, input, video { font: inherit; }
+button { cursor: pointer; }
+img { display: block; max-width: 100%; }
+::selection { color: var(--white); background: var(--hot-pink); }
+.skip-link { position: fixed; left: 1rem; top: 1rem; z-index: 20; padding: 0.55rem 0.8rem; border: var(--pixel-border); background: var(--white); transform: translateY(-160%); }
+.skip-link:focus { transform: translateY(0); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.site-header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; width: min(100% - 1rem, var(--page-max)); margin: 0.5rem auto 0; padding: 0.55rem; border: var(--pixel-border); border-radius: var(--small-radius); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,214,238,0.94)), var(--white); box-shadow: 0 7px 0 rgba(255,79,179,0.18), 0 15px 24px var(--shadow); }
+.site-logo { display: inline-flex; align-items: center; min-height: 2rem; padding: 0.2rem 0.45rem; color: var(--deep-pink); font-family: "Press Start 2P","Courier New",monospace; font-size: 0.68rem; text-decoration: none; text-shadow: 1px 1px 0 var(--white); }
+.site-nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.35rem; }
+.site-nav a { display: grid; place-items: center; width: 2rem; height: 2rem; border: 2px solid var(--hot-pink); border-radius: var(--small-radius); color: var(--deep-pink); background: linear-gradient(180deg, var(--white), var(--baby-pink)); font-size: 0.76rem; font-weight: 700; text-decoration: none; box-shadow: inset 0 1px 0 var(--white), 0 3px 0 rgba(184,15,115,0.18); }
+.site-nav a:hover, .site-nav a:focus-visible, .site-nav a[aria-current="page"] { color: var(--white); background: linear-gradient(180deg, #ff9fda, var(--hot-pink)); outline: none; }
+.sound-toggle { position: fixed; right: 0.75rem; bottom: 0.75rem; z-index: 15; display: grid; place-items: center; width: 3rem; height: 3rem; border: var(--pixel-border); border-radius: 50%; color: var(--deep-pink); background: linear-gradient(180deg, var(--white), var(--baby-blue)); box-shadow: 0 6px 0 rgba(184,15,115,0.2), 0 0 18px rgba(255,79,179,0.35); }
+.sound-toggle.is-playing { color: var(--white); background: linear-gradient(180deg, #ffb7e5, var(--hot-pink)); animation: music-pulse 1.8s ease-in-out infinite; }
+.page-shell { width: min(100% - 1.25rem, var(--page-max)); min-height: calc(100svh - 6rem); margin: 0 auto; padding: 1.1rem 0 4rem; opacity: 0; transform: translateY(10px); }
+body.is-loaded .page-shell { opacity: 1; transform: translateY(0); transition: opacity 420ms ease, transform 420ms ease; }
+body.is-leaving .page-shell { opacity: 0; transform: translateY(8px); transition: opacity 220ms ease, transform 220ms ease; }
+.window-frame { position: relative; display: grid; gap: var(--content-gap); margin: 1rem auto 0; padding: 1rem; border: var(--pixel-border); border-radius: var(--small-radius); background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,240,249,0.95)), repeating-linear-gradient(45deg, rgba(255,159,214,0.16) 0 8px, rgba(188,236,255,0.16) 8px 16px); box-shadow: 0 0 0 4px rgba(255,255,255,0.85), 0 9px 0 rgba(255,79,179,0.2), 0 22px 32px var(--shadow); overflow: hidden; }
+.window-frame::before { content: ""; position: absolute; inset: 2.7rem 0 auto; height: 2px; background: repeating-linear-gradient(90deg, var(--hot-pink) 0 8px, transparent 8px 14px); opacity: 0.45; }
+.window-title { display: flex; align-items: center; min-height: 2rem; margin: -1rem -1rem 0; padding: 0.45rem 0.8rem; border-bottom: 2px solid var(--deep-pink); color: var(--white); background: linear-gradient(180deg, #ff8ed3, var(--hot-pink)); font-family: "Press Start 2P","Courier New",monospace; font-size: 0.66rem; text-shadow: 1px 1px 0 var(--deep-pink); }
+.sticker-row, .final-stickers { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.7rem; padding-top: 0.35rem; }
+.decor-img { width: 64px; height: 64px; object-fit: contain; image-rendering: pixelated; filter: drop-shadow(0 4px 0 rgba(184,15,115,0.12)); }
+.replaceable-gif { animation: sticker-float 2.6s ease-in-out infinite; }
+.sticker-row .decor-img:nth-child(2) { animation: sticker-wiggle 3.2s ease-in-out infinite; }
+.eyebrow, .subtitle, .tiny-status, .small-copy { margin: 0; text-align: center; }
+.eyebrow { color: var(--deep-pink); font-family: "Press Start 2P","Courier New",monospace; font-size: 0.65rem; }
+h1 { max-width: 16ch; margin: 0 auto; color: var(--deep-pink); font-family: "Gaegu","Comic Sans MS",cursive; font-size: 2rem; line-height: 1.05; text-align: center; text-shadow: 2px 2px 0 var(--white), 3px 3px 0 var(--baby-blue); }
+.small-copy, .tiny-status, .subtitle { color: #7b4471; }
+.tiny-status { font-size: 0.9rem; }
+.subtitle { font-family: "Press Start 2P","Courier New",monospace; font-size: 0.72rem; }
+.name-form, .age-form { display: grid; gap: 0.75rem; width: min(100%, 440px); margin: 0 auto; }
+input { width: 100%; min-height: 3.25rem; padding: 0.75rem 1rem; border: var(--pixel-border); border-radius: var(--small-radius); color: var(--ink); background: linear-gradient(180deg, var(--white), #fff8fd); box-shadow: inset 0 2px 0 rgba(255,159,214,0.22), 0 4px 0 rgba(184,15,115,0.14); text-align: center; }
+input::placeholder { color: rgba(99,50,92,0.6); }
+input:focus { outline: 3px solid var(--baby-blue); outline-offset: 2px; }
+.gloss-button, .choice-button { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; min-width: 9.5rem; max-width: 100%; padding: 0.75rem 1rem; border: var(--pixel-border); border-radius: 999px; color: var(--white); background: linear-gradient(180deg, #ffc6ec 0%, var(--hot-pink) 48%, #e7329f 100%); box-shadow: inset 0 2px 0 rgba(255,255,255,0.7), 0 6px 0 rgba(184,15,115,0.24), 0 0 18px rgba(255,79,179,0.28); font-weight: 700; text-align: center; text-decoration: none; text-shadow: 1px 1px 0 var(--deep-pink); transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease; }
+.gloss-button::before, .choice-button::before { content: ""; position: absolute; inset: 0.35rem 0.9rem auto; height: 0.5rem; border-radius: inherit; background: rgba(255,255,255,0.55); pointer-events: none; }
+.gloss-button:hover, .gloss-button:focus-visible, .choice-button:hover, .choice-button:focus-visible { outline: none; transform: translateY(-2px); filter: saturate(1.12); box-shadow: inset 0 2px 0 rgba(255,255,255,0.8), 0 8px 0 rgba(184,15,115,0.24), 0 0 28px rgba(255,79,179,0.5); }
+.gloss-button:active, .choice-button:active { transform: translateY(2px); box-shadow: inset 0 2px 0 rgba(255,255,255,0.7), 0 3px 0 rgba(184,15,115,0.24), 0 0 18px rgba(255,79,179,0.28); }
+.video-shell { width: min(100%, 690px); margin: 0 auto; padding: 0.5rem; border: var(--pixel-border); border-radius: var(--small-radius); background: linear-gradient(180deg, var(--white), var(--baby-pink)), repeating-linear-gradient(90deg, var(--baby-blue) 0 10px, var(--lavender) 10px 20px); box-shadow: inset 0 0 0 3px rgba(255,255,255,0.7), 0 7px 0 rgba(184,15,115,0.16); }
+.video-shell video { display: block; width: 100%; aspect-ratio: 16 / 9; border: 2px solid var(--deep-pink); border-radius: var(--small-radius); background: #fff8fd; object-fit: cover; }
+.video-panel .gloss-button, .reaction-panel .gloss-button { justify-self: center; }
+.age-message, .kid-panel { margin: 0; text-align: center; }
+.age-message { min-height: 1.7rem; color: var(--deep-pink); font-weight: 700; }
+.kid-panel { display: grid; gap: 0.8rem; justify-items: center; padding: 1rem; border: 2px dashed var(--hot-pink); border-radius: var(--small-radius); background: rgba(255,255,255,0.72); }
+.kid-panel[hidden] { display: none; }
+.kid-panel p { margin: 0; font-size: 1.25rem; font-weight: 700; }
+.choice-zone { position: relative; display: grid; grid-template-columns: 1fr; gap: 0.85rem; justify-items: center; min-height: 10rem; padding: 1rem 0.25rem; }
+.choice-good { background: linear-gradient(180deg, #c9ffe3 0%, #60dca3 48%, #34b982 100%); border-color: #15895c; text-shadow: 1px 1px 0 #15895c; box-shadow: inset 0 2px 0 rgba(255,255,255,0.72), 0 6px 0 rgba(21,137,92,0.24), 0 0 18px rgba(96,220,163,0.28); }
+.choice-runaway { background: linear-gradient(180deg, #d9c7ff 0%, #9d77ff 48%, #7653d9 100%); border-color: #5d39bd; text-shadow: 1px 1px 0 #5d39bd; }
+.choice-runaway.is-running-away { position: fixed; z-index: 30; margin: 0; transition: left 60ms linear, top 60ms linear, transform 120ms ease; animation: panic-shake 0.3s steps(2,end) infinite; }
+.reaction-copy { margin: 0 auto; color: var(--deep-pink); font-family: "Gaegu","Comic Sans MS",cursive; font-size: 1.65rem; font-weight: 700; text-align: center; }
+.envelope-panel { justify-items: center; }
+.envelope { position: relative; width: min(88vw, 430px); aspect-ratio: 1.45 / 1; margin: 0.4rem auto; border: 0; background: transparent; perspective: 900px; filter: drop-shadow(0 14px 0 rgba(184,15,115,0.13)) drop-shadow(0 20px 24px rgba(184,15,115,0.2)); }
+.envelope span { position: absolute; display: block; }
+.envelope-back { inset: 13% 3% 8%; border: var(--pixel-border); border-radius: var(--small-radius); background: linear-gradient(180deg, #ffbde5, #ff8dcd); }
+.envelope-front { inset: 25% 3% 8%; border-right: var(--pixel-border); border-bottom: var(--pixel-border); border-left: var(--pixel-border); border-radius: 0 0 var(--small-radius) var(--small-radius); background: linear-gradient(145deg, transparent 49%, rgba(255,255,255,0.35) 50%, transparent 51%), linear-gradient(215deg, transparent 49%, rgba(255,255,255,0.35) 50%, transparent 51%), linear-gradient(180deg, #ff9fd6, #ff69bd); }
+.envelope-flap { left: 3%; right: 3%; top: 13%; height: 45%; border: var(--pixel-border); border-bottom: 0; border-radius: var(--small-radius) var(--small-radius) 0 0; background: linear-gradient(160deg, #ffd6ee, #ff7cc7); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: 50% 0; transition: transform 700ms ease; }
+.envelope-letter-peek { left: 13%; right: 13%; top: 18%; height: 42%; border: 2px solid var(--deep-pink); border-radius: var(--small-radius); background: repeating-linear-gradient(0deg, transparent 0 18px, rgba(188,236,255,0.55) 18px 20px), linear-gradient(180deg, var(--white), #fff8fd); transform: translateY(30%); transition: transform 720ms ease 120ms; }
+.envelope-seal { left: 50%; top: 48%; display: grid; place-items: center; width: 3.4rem; height: 3.4rem; border: 3px solid var(--white); border-radius: 50%; color: var(--white); background: linear-gradient(180deg, #ff8ed3, var(--deep-pink)); font-size: 1.7rem; transform: translate(-50%,-50%); box-shadow: 0 3px 0 rgba(184,15,115,0.28); transition: transform 360ms ease, opacity 360ms ease; }
+.envelope:hover .envelope-seal, .envelope:focus-visible .envelope-seal { transform: translate(-50%,-50%) scale(1.08); }
+.envelope:focus-visible { outline: 4px solid var(--baby-blue); outline-offset: 6px; }
+.envelope.is-open .envelope-flap { transform: rotateX(168deg); }
+.envelope.is-open .envelope-letter-peek { transform: translateY(-22%); }
+.envelope.is-open .envelope-seal { opacity: 0; transform: translate(-50%,-50%) scale(0.6); }
+.letter-paper { width: min(100%, 660px); margin: 0 auto; padding: 1.2rem; border: var(--pixel-border); border-radius: var(--small-radius); color: #56234e; background: repeating-linear-gradient(0deg, transparent 0 1.85rem, rgba(255,159,214,0.28) 1.85rem 1.95rem), linear-gradient(180deg, #fffefd, #fff4fb); box-shadow: 0 8px 0 rgba(184,15,115,0.16), inset 0 0 0 4px rgba(255,255,255,0.82); animation: letter-pop 520ms ease both; }
+.letter-paper[hidden] { display: none; }
+.letter-paper p { margin: 0; font-family: "Gaegu","Comic Sans MS",cursive; font-size: 1.65rem; font-weight: 700; line-height: 1.9; text-align: center; }
+.final-stickers { margin-top: 0.25rem; }
+.cursor-sparkle, .burst-heart { position: fixed; z-index: 40; pointer-events: none; color: var(--hot-pink); font-size: 1rem; text-shadow: 1px 1px 0 var(--white); }
+.cursor-sparkle { animation: cursor-sparkle 650ms ease-out forwards; }
+.burst-heart { animation: burst-heart 900ms ease-out forwards; }
+.sky-layer { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.sky-layer span { position: absolute; color: var(--hot-pink); font-size: 1.25rem; text-shadow: 1px 1px 0 var(--white), 0 0 12px rgba(255,79,179,0.45); opacity: 0.8; animation: float-symbol 6s ease-in-out infinite; }
+.sky-layer span:nth-child(1) { left: 7%; top: 16%; }
+.sky-layer span:nth-child(2) { right: 9%; top: 24%; animation-delay: 0.8s; }
+.sky-layer span:nth-child(3) { left: 13%; bottom: 18%; color: #7653d9; animation-delay: 1.5s; }
+.sky-layer span:nth-child(4) { right: 18%; bottom: 14%; color: #2f9fc9; animation-delay: 2.1s; }
+.sky-layer span:nth-child(5) { left: 47%; top: 9%; animation-delay: 2.8s; }
+.sky-layer span:nth-child(6) { right: 43%; bottom: 8%; color: #34b982; animation-delay: 3.4s; }
+main, .site-header { position: relative; z-index: 2; }
+@media (min-width: 640px) {
+  .site-header { padding: 0.65rem 0.75rem; }
+  .site-logo { font-size: 0.78rem; }
+  .page-shell { padding-top: 1.4rem; }
+  .window-frame { gap: 1.15rem; padding: 1.25rem; }
+  .window-title { margin: -1.25rem -1.25rem 0; padding-inline: 1rem; }
+  h1 { max-width: 18ch; font-size: 2.45rem; }
+  .name-form, .age-form { grid-template-columns: 1fr auto; align-items: center; }
+  .decor-img { width: 76px; height: 76px; }
+  .choice-zone { grid-template-columns: repeat(2, minmax(0, 1fr)); min-height: 12rem; }
+  .reaction-copy, .letter-paper p { font-size: 2rem; }
+}
+@media (min-width: 900px) {
+  .window-frame { padding: 1.5rem; }
+  .window-title { margin: -1.5rem -1.5rem 0; }
+  h1 { font-size: 2.75rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+@keyframes twinkle-bg { 50% { opacity: 0.55; } }
+@keyframes sticker-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes sticker-wiggle { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(3deg) scale(1.03); } }
+@keyframes music-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+@keyframes float-symbol { 0%,100% { transform: translate3d(0,0,0) rotate(0deg); } 50% { transform: translate3d(0,-16px,0) rotate(8deg); } }
+@keyframes panic-shake { 0% { transform: rotate(-2deg); } 100% { transform: rotate(2deg); } }
+@keyframes letter-pop { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes cursor-sparkle { from { opacity: 1; transform: translate(-50%,-50%) scale(1); } to { opacity: 0; transform: translate(-50%,-130%) scale(0.2); } }
+@keyframes burst-heart { from { opacity: 1; transform: translate(-50%,-50%) scale(0.7); } to { opacity: 0; transform: translate(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y))) scale(1.35); } }
+.page-view { display: none; }
+.page-view.active { display: grid; }
+    </style>
+  </head>
+  <body data-page="intro">
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <div class="sky-layer" aria-hidden="true"><span>✦</span><span>♡</span><span>☆</span><span>✧</span><span>♥</span><span>✦</span></div>
+    <button class="sound-toggle" type="button" data-sound-toggle aria-label="Toggle background music" title="music">♪</button>
+    <header class="site-header">
+      <a class="site-logo" href="index.html">♡ lysfm😖 </a>
+      <nav class="site-nav" aria-label="Cute page map">
+        <a aria-current="page" href="index.html">01</a>
+        <a href="page2.html">02</a>
+        <a href="page3.html">03</a>
+        <a href="page4.html">04</a>
+        <a href="page5.html">05</a>
+        <a href="page6.html">06</a>
+      </nav>
+    </header>
+    <main id="main" class="page-shell">
+
+      <section class="page-view window-frame intro-panel active" id="view-intro" aria-labelledby="intro-title">
+        <div class="window-title">warning.exe</div>
+        <div class="sticker-row" aria-hidden="true">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-sparkle.gif" alt="">
+          <img class="decor-img" src="images/pixel-cat.svg" alt="">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-heart.gif" alt="">
+        </div>
+        <p class="eyebrow">soft neon webcore portal</p>
+        <h1 id="intro-title">Warning... Someone is nearing death 🙀🚨</h1>
+        <form class="name-form" id="intro-form" autocomplete="off">
+          <label class="sr-only" for="visitor-name">if that's you type Ur name</label>
+          <input id="visitor-name" name="visitorName" type="text" maxlength="24" placeholder="if it's you type ur name">
+          <button class="gloss-button" type="submit">Continue</button>
+        </form>
+        <p class="tiny-status" id="intro-status" aria-live="polite">♡♡</p>
+      </section>
+
+      <section class="page-view window-frame video-panel" id="view-video" aria-labelledby="video-title">
+        <div class="window-title">memory-player.html</div>
+        <div class="sticker-row" aria-hidden="true">
+          <img class="decor-img" src="images/pixel-bunny.svg" alt="">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-star.gif" alt="">
+          <img class="decor-img" src="images/teddy.svg" alt="">
+        </div>
+        <p class="eyebrow">hi <span data-visitor-name>cutie</span> ♡</p>
+        <h1 id="video-title">a tiny video before the next portal</h1>
+        <div class="video-shell">
+          <video id="memory-video" controls playsinline preload="metadata" poster="images/video-poster.svg">
+            <source src="videos/video.mp4" type="video/mp4">
+            Your browser could not play the placeholder video.
+          </video>
+        </div>
+        <button class="gloss-button" id="video-continue" type="button">Continue</button>
+        <p class="tiny-status"> </p>
+      </section>
+
+      <section class="page-view window-frame age-panel" id="view-age" aria-labelledby="age-title">
+        <div class="window-title">age-check.js</div>
+        <div class="sticker-row" aria-hidden="true">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-heart.gif" alt="">
+          <img class="decor-img" src="images/bow.svg" alt="">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-sparkle.gif" alt="">
+        </div>
+        <h1 id="age-title">How old r u now?</h1>
+        <form class="age-form" id="age-form">
+          <label class="sr-only" for="age-input">How old ru now?</label>
+          <input id="age-input" type="number" min="0" max="120" inputmode="numeric" placeholder="type age">
+          <button class="gloss-button" type="submit">Check</button>
+        </form>
+        <p class="age-message" id="age-message" aria-live="polite"></p>
+        <div class="kid-panel" id="kid-panel" hidden>
+          <p>😹😹 هه ... بعدك قاصر</p>
+          <button class="gloss-button" id="kid-continue" type="button">Continue</button>
+        </div>
+      </section>
+
+      <section class="page-view window-frame trick-panel" id="view-trick" aria-labelledby="trick-title">
+        <div class="window-title">choose-wisely.neocities</div>
+        <div class="sticker-row" aria-hidden="true">
+          <img class="decor-img" src="images/pixel-cat.svg" alt="">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-star.gif" alt="">
+          <img class="decor-img" src="images/pixel-bunny.svg" alt="">
+        </div>
+        <h1 id="trick-title">What is ur favorite thing in the world</h1>
+        <p class="subtitle">choose wisely😝</p>
+        <div class="choice-zone" aria-label="Favorite thing choices">
+          <button class="choice-button choice-good" id="ubichu-choice" type="button">ubichu</button>
+          <button class="choice-button choice-runaway" id="game-choice" type="button" lang="ar">القيمه</button>
+        </div>
+      </section>
+
+      <section class="page-view window-frame reaction-panel" id="view-reaction" aria-labelledby="reaction-title">
+        <div class="window-title">reaction.gif</div>
+        <div class="sticker-row" aria-hidden="true">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-heart.gif" alt="">
+          <img class="decor-img" src="images/teddy.svg" alt="">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-sparkle.gif" alt="">
+        </div>
+        <h1 id="reaction-title">Ooooh, I can't believe U actually chose me. 🤏🏻🥹</h1>
+        <p class="reaction-copy">i would chose U too btw🙄👉🏻👈🏻</p>
+        <button class="gloss-button" id="reaction-continue" type="button">Continue</button>
+      </section>
+
+      <section class="page-view window-frame envelope-panel" id="view-envelope" aria-labelledby="envelope-title">
+        <div class="window-title">final-letter.mail</div>
+        <div class="sticker-row" aria-hidden="true">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-star.gif" alt="">
+          <img class="decor-img" src="images/bow.svg" alt="">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-heart.gif" alt="">
+        </div>
+        <h1 id="envelope-title">click the pink envelope</h1>
+        <button class="envelope" id="pink-envelope" type="button" aria-expanded="false" aria-controls="birthday-letter">
+          <span class="envelope-back" aria-hidden="true"></span>
+          <span class="envelope-letter-peek" aria-hidden="true"></span>
+          <span class="envelope-front" aria-hidden="true"></span>
+          <span class="envelope-flap" aria-hidden="true"></span>
+          <span class="envelope-seal" aria-hidden="true">♡</span>
+          <span class="sr-only">Open birthday envelope</span>
+        </button>
+        <article class="letter-paper" id="birthday-letter" dir="rtl" lang="ar" tabindex="-1" hidden>
+          <p>كل عام وأنت بخير يا أجمل شيء بالدنيا 🎂💖 أحبك وأعشقك، وأتمنى لك سنة سعيدة وحياة كلها فرح. وكل عام وأني محظوظ لأنك بحياتي. 🙄💖</p>
+        </article>
+        <div class="final-stickers" aria-hidden="true">
+          <img class="decor-img" src="images/pixel-cat.svg" alt="">
+          <img class="decor-img replaceable-gif" src="images/gif-placeholder-sparkle.gif" alt="">
+          <img class="decor-img" src="images/teddy.svg" alt="">
+        </div>
+      </section>
+
+    </main>
+    <script>
+(() => {
+  "use strict";
+  var SK = { visitorName: "uncClubVisitorName", musicWanted: "uncClubMusicWanted" };
+  var AF = { bgm: "audio/bgm.wav", click: "audio/click.wav", envelope: "audio/envelope-open.wav", sparkle: "audio/sparkle.wav" };
+  var ADULT_URL = "https://pornhub.com/";
+  var DELAY = 260;
+  var noMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var audio = {
+    bgm: mkAudio(AF.bgm, { loop: true, volume: 0.22 }),
+    click: mkAudio(AF.click, { volume: 0.42 }),
+    envelope: mkAudio(AF.envelope, { volume: 0.58 }),
+    sparkle: mkAudio(AF.sparkle, { volume: 0.35 })
+  };
+  var V = { "index.html":"intro", "page2.html":"video", "page3.html":"age", "page4.html":"trick", "page5.html":"reaction", "page6.html":"envelope" };
+  var H = { intro:"index.html", video:"page2.html", age:"page3.html", trick:"page4.html", reaction:"page5.html", envelope:"page6.html" };
+  var T = { intro:"UNC Club - Warning", video:"UNC Club - Video", age:"UNC Club - Age Check", trick:"UNC Club - Choose Wisely", reaction:"UNC Club - Reaction", envelope:"UNC Club - Letter" };
+
+  document.addEventListener("DOMContentLoaded", function() {
+    document.body.classList.add("is-loaded");
+    fillName();
+    setupAudio();
+    setupToggle();
+    setupNav();
+    setupSparkles();
+    setupIntro();
+    setupVideo();
+    setupAge();
+    setupTrick();
+    setupReaction();
+    setupEnvelope();
+    switchView("intro", false);
+  });
+
+  function mkAudio(src, o) {
+    var s = new Audio(src); s.preload = "auto";
+    s.loop = !!(o && o.loop); s.volume = (o && typeof o.volume === "number") ? o.volume : 0.5;
+    return s;
+  }
+  function playBGM() { sessionStorage.setItem(SK.musicWanted, "true"); audio.bgm.play().then(updToggle).catch(function(){ updToggle(); }); }
+  function stopBGM() { audio.bgm.pause(); sessionStorage.setItem(SK.musicWanted, "false"); updToggle(); }
+  function playFX(s) { if (!s) return; s.currentTime = 0; s.play().catch(function(){}); }
+
+  function setupAudio() {
+    var unlock = function() { if (sessionStorage.getItem(SK.musicWanted) === "true") playBGM(); };
+    document.addEventListener("pointerdown", unlock, { once: true });
+    document.addEventListener("keydown", unlock, { once: true });
+    document.addEventListener("click", function(e) {
+      var t = e.target.closest("a, button, input[type='submit']");
+      if (t) playFX(audio.click);
+    }, true);
+  }
+
+  function setupToggle() {
+    var btn = document.querySelector("[data-sound-toggle]");
+    if (!btn) return;
+    btn.addEventListener("click", function() { if (audio.bgm.paused) playBGM(); else stopBGM(); });
+    updToggle();
+  }
+  function updToggle() {
+    var btn = document.querySelector("[data-sound-toggle]");
+    if (!btn) return;
+    var p = !audio.bgm.paused;
+    btn.classList.toggle("is-playing", p);
+    btn.setAttribute("aria-label", p ? "Pause background music" : "Play background music");
+  }
+
+  function setupNav() {
+    document.addEventListener("click", function(e) {
+      var link = e.target.closest("a[href]");
+      if (!link || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var url = new URL(link.href, window.location.href);
+      if (url.origin === window.location.origin && url.pathname.endsWith(".html")) {
+        e.preventDefault();
+        goPage(url.href);
+      }
+    });
+  }
+
+  function goPage(url) {
+    var p;
+    try { p = new URL(url, window.location.href).pathname.split("/").pop(); } catch(e) { p = url; }
+    var id = V[p];
+    if (id) {
+      if (id === document.body.dataset.page) return;
+      document.body.classList.add("is-leaving");
+      setTimeout(function() { switchView(id, true); }, noMotion ? 0 : DELAY);
+    } else {
+      window.location.href = url;
+    }
+  }
+
+  function switchView(id, anim) {
+    document.querySelectorAll(".page-view").forEach(function(v) { v.classList.remove("active"); });
+    var t = document.getElementById("view-" + id);
+    if (t) t.classList.add("active");
+    document.body.dataset.page = id;
+    document.querySelectorAll(".site-nav a").forEach(function(a) {
+      a.setAttribute("aria-current", a.getAttribute("href") === H[id] ? "page" : "false");
+    });
+    document.title = T[id] || "UNC Club";
+    document.documentElement.lang = id === "envelope" ? "ar" : "en";
+    document.body.classList.remove("is-loaded", "is-leaving");
+    if (anim !== false) void document.body.offsetWidth;
+    document.body.classList.add("is-loaded");
+  }
+
+  function fillName() {
+    var n = sessionStorage.getItem(SK.visitorName) || "";
+    document.querySelectorAll("[data-visitor-name]").forEach(function(el) { el.textContent = n; });
+  }
+
+  function setupIntro() {
+    var form = document.querySelector("#intro-form");
+    var inp = document.querySelector("#visitor-name");
+    var st = document.querySelector("#intro-status");
+    if (!form || !inp) return;
+    var old = sessionStorage.getItem(SK.visitorName);
+    if (old) inp.value = old;
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      var name = inp.value.trim() || "";
+      sessionStorage.setItem(SK.visitorName, name);
+      if (st) st.textContent = "welcome " + name + " ♡ loading page 2...";
+      playBGM();
+      goPage("page2.html");
+    });
+  }
+
+  function setupVideo() {
+    var vid = document.querySelector("#memory-video");
+    var btn = document.querySelector("#video-continue");
+    if (btn) btn.addEventListener("click", function() { goPage("page3.html"); });
+    if (vid) vid.addEventListener("ended", function() { goPage("page3.html"); });
+  }
+
+  function setupAge() {
+    var form = document.querySelector("#age-form");
+    var inp = document.querySelector("#age-input");
+    var msg = document.querySelector("#age-message");
+    var kid = document.querySelector("#kid-panel");
+    var kidBtn = document.querySelector("#kid-continue");
+    if (!form || !inp || !msg || !kid) return;
+    form.addEventListener("submit", function(e) { e.preventDefault(); check(); });
+    inp.addEventListener("input", function() { var a = Number(inp.value); if (Number.isFinite(a) && a >= 18) check(); });
+    if (kidBtn) kidBtn.addEventListener("click", function() { goPage("page4.html"); });
+    function check() {
+      var age = Number(inp.value);
+      if (!Number.isFinite(age) || inp.value.trim() === "") { msg.textContent = "type a number first ♡"; kid.hidden = true; return; }
+      if (age >= 18) { msg.textContent = "redirecting..."; setTimeout(function() { window.location.href = ADULT_URL; }, noMotion ? 0 : 450); return; }
+      msg.textContent = ""; kid.hidden = false;
+    }
+  }
+
+  function setupTrick() {
+    var u = document.querySelector("#ubichu-choice");
+    var r = document.querySelector("#game-choice");
+    var M = 18;
+    if (u) u.addEventListener("click", function() { goPage("page5.html"); });
+    if (!r) return;
+    var d = function(e) { e.preventDefault(); moveBtn(r, M); };
+    r.addEventListener("pointerenter", d);
+    r.addEventListener("mouseenter", d);
+    r.addEventListener("focus", d);
+    r.addEventListener("pointerdown", d);
+    r.addEventListener("touchstart", d, { passive: false });
+    r.addEventListener("click", d);
+  }
+
+  function moveBtn(btn, m) {
+    var r = btn.getBoundingClientRect();
+    var mx = Math.max(m, window.innerWidth - r.width - m);
+    var my = Math.max(m, window.innerHeight - r.height - m);
+    btn.classList.add("is-running-away");
+    btn.style.left = rnd(m, mx) + "px";
+    btn.style.top = rnd(m, my) + "px";
+  }
+  function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+  function setupReaction() {
+    var b = document.querySelector("#reaction-continue");
+    if (b) b.addEventListener("click", function() { goPage("page6.html"); });
+  }
+
+  function setupEnvelope() {
+    var env = document.querySelector("#pink-envelope");
+    var ltr = document.querySelector("#birthday-letter");
+    if (!env || !ltr) return;
+    env.addEventListener("click", function() {
+      if (env.classList.contains("is-open")) return;
+      playBGM();
+      playFX(audio.envelope);
+      setTimeout(function() { playFX(audio.sparkle); }, 180);
+      env.classList.add("is-open");
+      env.setAttribute("aria-expanded", "true");
+      burst(env);
+      setTimeout(function() { ltr.hidden = false; ltr.focus({ preventScroll: true }); }, noMotion ? 0 : 420);
+    });
+  }
+
+  function setupSparkles() {
+    if (noMotion) return;
+    var last = 0;
+    document.addEventListener("pointermove", function(e) {
+      var n = Date.now();
+      if (n - last < 95 || e.pointerType === "touch") return;
+      last = n;
+      var s = document.createElement("span");
+      s.className = "cursor-sparkle";
+      s.textContent = Math.random() > 0.5 ? "✦" : "♡";
+      s.style.left = e.clientX + "px";
+      s.style.top = e.clientY + "px";
+      document.body.appendChild(s);
+      s.addEventListener("animationend", function() { s.remove(); });
+    });
+  }
+
+  function burst(anchor) {
+    if (noMotion) return;
+    var r = anchor.getBoundingClientRect();
+    var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    var syms = ["♡","♥","✦","☆"];
+    for (var i = 0; i < 18; i++) {
+      var h = document.createElement("span");
+      var a = (Math.PI * 2 * i) / 18;
+      var d = rnd(58, 150);
+      h.className = "burst-heart";
+      h.textContent = syms[i % syms.length];
+      h.style.left = cx + "px"; h.style.top = cy + "px";
+      h.style.setProperty("--burst-x", Math.cos(a) * d + "px");
+      h.style.setProperty("--burst-y", Math.sin(a) * d + "px");
+      document.body.appendChild(h);
+      h.addEventListener("animationend", function() { h.remove(); });
+    }
+  }
+})();
+    </script>
+  </body>
+</html>

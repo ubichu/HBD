@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-labelledby="title desc">
+  <title id="title">Pixel bunny placeholder</title>
+  <desc id="desc">Replace this image with your own bunny decoration.</desc>
+  <rect width="80" height="80" fill="#f4fbff"/>
+  <path fill="#ffd6ee" d="M24 8h10v24H24zm22 0h10v24H46z"/>
+  <path fill="#ff9fd6" d="M28 12h4v18h-4zm22 0h4v18h-4z"/>
+  <path fill="#ffffff" d="M18 28h44v34H18z"/>
+  <path fill="#ffd6ee" d="M18 52h44v10H18z"/>
+  <path fill="#63325c" d="M28 40h6v6h-6zm18 0h6v6h-6zm-8 10h4v4h-4z"/>
+  <path fill="#ff4fb3" d="M12 18h8v8h-8zm48 40h8v8h-8z"/>
+  <path fill="#c9ffe3" d="M8 58h8v8H8zm56-46h8v8h-8z"/>
+</svg>
