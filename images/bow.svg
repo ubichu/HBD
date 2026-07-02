@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-labelledby="title desc">
-  <title id="title">Pink bow placeholder</title>
-  <desc id="desc">Replace this image with your own bow, ribbon, or sticker.</desc>
-  <rect width="80" height="80" fill="#fff0f9"/>
-  <path fill="#ff4fb3" d="M8 22h20l12 12 12-12h20v36H52L40 46 28 58H8z"/>
-  <path fill="#ff9fd6" d="M14 28h14l10 10-10 10H14zm38 0h14v20H52L42 38z"/>
-  <path fill="#b80f73" d="M34 32h12v16H34z"/>
-  <path fill="#ffffff" d="M18 32h8v4h-8zm36 0h8v4h-8z"/>
-</svg>

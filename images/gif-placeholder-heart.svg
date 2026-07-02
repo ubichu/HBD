@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-labelledby="title desc">
-  <title id="title">Heart GIF placeholder</title>
-  <desc id="desc">Replace this GIF placeholder with your own animated heart GIF.</desc>
-  <rect width="80" height="80" rx="8" fill="#f4fbff"/>
-  <path fill="#ff4fb3" d="M22 18h12v6h12v-6h12v6h6v18h-6v8h-8v8h-8v8h-4v-8h-8v-8h-8v-8h-6V24h6z"/>
-  <path fill="#ffffff" d="M26 24h8v6h-8z"/>
-  <path fill="#d9c7ff" d="M10 10h8v8h-8zm52 52h8v8h-8z"/>
-  <text x="40" y="76" fill="#b80f73" font-family="monospace" font-size="8" text-anchor="middle">GIF</text>
-</svg>

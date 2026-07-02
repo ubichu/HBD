@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-labelledby="title desc">
-  <title id="title">Sparkle GIF placeholder</title>
-  <desc id="desc">Replace this GIF placeholder with your own animated sparkle GIF.</desc>
-  <rect width="80" height="80" rx="8" fill="#fff0f9"/>
-  <path fill="#ff4fb3" d="M38 8h6v20h20v6H44v20h-6V34H18v-6h20z"/>
-  <path fill="#fff3a8" d="M58 48h4v8h8v4h-8v8h-4v-8h-8v-4h8z"/>
-  <path fill="#bcecff" d="M14 48h4v8h8v4h-8v8h-4v-8H6v-4h8z"/>
-  <text x="40" y="76" fill="#b80f73" font-family="monospace" font-size="8" text-anchor="middle">GIF</text>
-</svg>
